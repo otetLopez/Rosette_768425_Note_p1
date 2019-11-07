@@ -56,10 +56,17 @@
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" id="hFf-Yx-0Ae">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="edit" id="JqR-EC-0KP"/>
+                    <navigationItem key="navigationItem" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="never" id="hFf-Yx-0Ae">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="JqR-EC-0KP">
+                            <connections>
+                                <action selector="editButton:" destination="rQM-hQ-DAA" id="SLT-7m-sL7"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="editButtonLabel" destination="JqR-EC-0KP" id="nqU-0f-Ome"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nzc-1N-zRT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

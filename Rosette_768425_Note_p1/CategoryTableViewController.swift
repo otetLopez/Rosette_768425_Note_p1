@@ -10,10 +10,13 @@ import UIKit
 
 class CategoryTableViewController: UITableViewController {
     
+    @IBOutlet weak var editButtonLabel: UIBarButtonItem!
     var folderList = [Folder]()
+    var isEditingFolders : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        editButtonLabel.title = "Edit"
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -80,6 +83,45 @@ class CategoryTableViewController: UITableViewController {
     func reloadTableView() {
         self.tableView.reloadData()
     }
+    
+    @IBAction func editButton(_ sender: UIBarButtonItem) {
+        if isEditingFolders == true {
+            self.tableView.isEditing = false
+            isEditingFolders = false
+            sender.title = "Edit"
+        } else {
+            print("DEBUG: Now Editing Folders")
+            self.tableView.isEditing = true
+            sender.title = "Done"
+            isEditingFolders = true
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("You selected \(folderList[indexPath.row])")
+    }
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+
+        let DeleteAction = UIContextualAction(style: .destructive, title: "Delete", handler: { (action, view, success) in
+        self.folderList.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .fade)})
+        return UISwipeActionsConfiguration(actions: [DeleteAction])
+    }
+    
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let movedObject = self.folderList[sourceIndexPath.row]
+        folderList.remove(at: sourceIndexPath.row)
+        folderList.insert(movedObject, at: destinationIndexPath.row)
+    }
+    
+        override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+            return .none
+        }
+        override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+            return false
+        }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
