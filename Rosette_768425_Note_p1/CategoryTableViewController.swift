@@ -9,7 +9,8 @@
 import UIKit
 
 class CategoryTableViewController: UITableViewController {
-
+    
+    var folderList = [Folder]()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,53 +25,61 @@ class CategoryTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return folderList.count
     }
     
     @IBAction func nFolderButtonPressed(_ sender: UIBarButtonItem) {
         alert()
     }
     
-        func alert() {
-            let alertController = UIAlertController(title: "New Folder", message: "Enter a name for this folder", preferredStyle: .alert)
-            
-            var nFolderName : UITextField?
-            alertController.addTextField { (nFolderName) in
-                nFolderName.placeholder = "example New Folder"
-            }
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            let addItemAction = UIAlertAction(title: "Add Item", style: .default) { (action) in
-                let textField = alertController.textFields![0]
-                print("DEBUG: Will be adding folder \(textField.text)")
-                
-            }
-            alertController.addAction(cancelAction)
-            alertController.addAction(addItemAction)
-            
-//            alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: {
-//                action in
-//                     // Called when user taps outside
-//            }))
-            
-            self.present(alertController, animated: true, completion: nil)
-        }
-
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "folder cell", for: indexPath)
+        
+    
+        cell.textLabel?.text = folderList[indexPath.row].getfname()
+        cell.imageView?.image = UIImage(named: "folder-icon")
+        
+        
+        
         return cell
     }
-    */
+    
+    
+    func alert() {
+        let alertController = UIAlertController(title: "New Folder", message: "Enter a name for this folder", preferredStyle: .alert)
+            
+        var nFolderName : UITextField?
+        alertController.addTextField { (nFolderName) in
+            nFolderName.placeholder = "example New Folder"
+        }
+            
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let addItemAction = UIAlertAction(title: "Add Item", style: .default) { (action) in
+            let textField = alertController.textFields![0]
+            print("DEBUG: Will be adding folder \(textField.text!)")
+            self.addNewFolder(fname: "\(textField.text!)")
+            self.reloadTableView()
+        }
+        alertController.addAction(cancelAction)
+        alertController.addAction(addItemAction)
+            
+        self.present(alertController, animated: true, completion: nil)
+    }
 
+    func addNewFolder(fname: String) {
+        let nFolder : Folder = Folder(fname: fname)
+        folderList.append(nFolder)
+    }
+
+    func reloadTableView() {
+        self.tableView.reloadData()
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
