@@ -16,7 +16,6 @@ class CategoryTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //editButtonLabel.title = "Edit"
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -43,10 +42,11 @@ class CategoryTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "folder cell", for: indexPath)
-        
-    
+        //let cell = UITableViewCell(style: .value1, reuseIdentifier: "folder cell")
         cell.textLabel?.text = folderList[indexPath.row].getfname()
         cell.imageView?.image = UIImage(named: "folder-icon")
+        cell.detailTextLabel?.text = ("\(folderList[indexPath.row].getNotesNum())")
+        cell.detailTextLabel?.textColor = UIColor.white
         
         return cell
     }
