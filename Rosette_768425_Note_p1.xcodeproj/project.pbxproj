@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F5114BE42379FE4F001090B9 /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5114BE32379FE4F001090B9 /* NotesViewController.swift */; };
+		F5114BE62379FE84001090B9 /* NotesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5114BE52379FE84001090B9 /* NotesTableViewController.swift */; };
 		F5142016237496D4006AA7DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5142015237496D4006AA7DE /* AppDelegate.swift */; };
 		F5142018237496D4006AA7DE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5142017237496D4006AA7DE /* SceneDelegate.swift */; };
 		F514201D237496D4006AA7DE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F514201B237496D4006AA7DE /* Main.storyboard */; };
@@ -20,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F5114BE32379FE4F001090B9 /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
+		F5114BE52379FE84001090B9 /* NotesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewController.swift; sourceTree = "<group>"; };
 		F5142012237496D4006AA7DE /* Rosette_768425_Note_p1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rosette_768425_Note_p1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5142015237496D4006AA7DE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F5142017237496D4006AA7DE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -73,6 +77,8 @@
 				F5142020237496D7006AA7DE /* LaunchScreen.storyboard */,
 				F5142023237496D7006AA7DE /* Info.plist */,
 				F514202B2374A023006AA7DE /* CategoryTableViewController.swift */,
+				F5114BE32379FE4F001090B9 /* NotesViewController.swift */,
+				F5114BE52379FE84001090B9 /* NotesTableViewController.swift */,
 			);
 			path = Rosette_768425_Note_p1;
 			sourceTree = "<group>";
@@ -168,8 +174,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5142016237496D4006AA7DE /* AppDelegate.swift in Sources */,
+				F5114BE62379FE84001090B9 /* NotesTableViewController.swift in Sources */,
 				F5142018237496D4006AA7DE /* SceneDelegate.swift in Sources */,
 				F514202C2374A023006AA7DE /* CategoryTableViewController.swift in Sources */,
+				F5114BE42379FE4F001090B9 /* NotesViewController.swift in Sources */,
 				F514202F2374A0E6006AA7DE /* ErrorCodes.swift in Sources */,
 				F5EB93952374A97F0003D81C /* Folders.swift in Sources */,
 				F5C40BD82379E59600F01907 /* Note.swift in Sources */,

@@ -11,20 +11,33 @@ import Foundation
 class Folder : CustomStringConvertible {
     private var fname : String
     private var notesNum : Int
-    //private var note : [String]
+    private var notesList : [String]
     
     init() {
         fname = ""
         notesNum = 0
+        notesList = []
     }
     init(fname: String) {
         self.fname = fname
         self.notesNum = 0
+        notesList = []
         print("DEBUG: Added folder \(fname)")
     }
     
-    func addNotes(newNote: String) {
-        
+    func addNote(newNote: String) {
+        notesList.append(newNote)
+        notesNum += 1
+    }
+    
+    func updNote(note: String, index: Int) {
+        notesList.remove(at: index)
+        notesList.insert(note, at: index)
+    }
+    
+    func deleteNote(idx: Int) {
+        notesList.remove(at: idx)
+        notesNum -= 1
     }
     
     func getfname() -> String {
@@ -33,6 +46,10 @@ class Folder : CustomStringConvertible {
     
     func getNotesNum() -> Int {
         return self.notesNum
+    }
+    
+    func getNoteList() -> [String] {
+        return self.notesList
     }
     
     var description: String {

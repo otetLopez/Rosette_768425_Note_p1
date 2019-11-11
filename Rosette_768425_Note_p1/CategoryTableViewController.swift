@@ -12,6 +12,7 @@ class CategoryTableViewController: UITableViewController {
     
     @IBOutlet weak var editButtonLabel: UIBarButtonItem!
     var folderList = [Folder]()
+    var folderIdx : Int = -1
     var isEditingFolders : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,7 +98,8 @@ class CategoryTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("You selected \(folderList[indexPath.row])")
+        folderIdx = indexPath.row
+        print("You selected \(folderList[indexPath.row]) at \(indexPath.row)")
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -162,14 +164,22 @@ class CategoryTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        
+        if let notes = segue.destination as? NotesTableViewController {
+            notes.delegate = self
+        }
+        
+        if let note = segue.destination as? NotesViewController {
+            note.delegateFolders = self
+        }
     }
-    */
+    
 
 }
