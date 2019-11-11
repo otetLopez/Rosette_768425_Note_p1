@@ -47,7 +47,7 @@ class CategoryTableViewController: UITableViewController {
         cell.textLabel?.text = folderList[indexPath.row].getfname()
         cell.imageView?.image = UIImage(named: "folder-icon")
         
-        //cell.detailTextLabel?.text = ("\(folderList[indexPath.row].getNotesNum())")
+        cell.detailTextLabel?.text = ("\(folderList[indexPath.row].getNotesNum())")
         
         
         return cell
