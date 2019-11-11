@@ -101,9 +101,13 @@ class CategoryTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 
+        if (tableView.isEditing == true) {
+            print("DEBUG: Trying to delete while in edit mode") }
+
         let DeleteAction = UIContextualAction(style: .destructive, title: "Delete", handler: { (action, view, success) in
         self.folderList.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .fade)})
+
         return UISwipeActionsConfiguration(actions: [DeleteAction])
     }
     
@@ -119,6 +123,8 @@ class CategoryTableViewController: UITableViewController {
         override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
             return false
         }
+    
+
     
     /*
     // Override to support conditional editing of the table view.
