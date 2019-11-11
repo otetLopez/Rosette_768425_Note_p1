@@ -51,18 +51,9 @@
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="Folders" id="hFf-Yx-0Ae">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="JqR-EC-0KP">
-                            <connections>
-                                <action selector="editButton:" destination="rQM-hQ-DAA" id="SLT-7m-sL7"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Folders" id="hFf-Yx-0Ae"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="editButtonLabel" destination="JqR-EC-0KP" id="nqU-0f-Ome"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nzc-1N-zRT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
