@@ -10,17 +10,29 @@ import Foundation
 
 class Folder : CustomStringConvertible {
     private var fname : String
+    private var notesNum : Int
+    //private var note : [String]
     
     init() {
         fname = ""
+        notesNum = 0
     }
     init(fname: String) {
         self.fname = fname
+        self.notesNum = 0
         print("DEBUG: Added folder \(fname)")
+    }
+    
+    func addNotes(newNote: String) {
+        
     }
     
     func getfname() -> String {
         return self.fname
+    }
+    
+    func getNotesNum() -> Int {
+        return self.notesNum
     }
     
     var description: String {

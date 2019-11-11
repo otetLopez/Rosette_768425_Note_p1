@@ -15,6 +15,7 @@
 		F514202C2374A023006AA7DE /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F514202B2374A023006AA7DE /* CategoryTableViewController.swift */; };
 		F514202F2374A0E6006AA7DE /* ErrorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F514202E2374A0E6006AA7DE /* ErrorCodes.swift */; };
 		F51AD7F12374AF650070CC25 /* folder-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F51AD7F02374AF650070CC25 /* folder-icon.png */; };
+		F5C40BD82379E59600F01907 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C40BD72379E59600F01907 /* Note.swift */; };
 		F5EB93952374A97F0003D81C /* Folders.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EB93942374A97F0003D81C /* Folders.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,7 @@
 		F514202B2374A023006AA7DE /* CategoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewController.swift; sourceTree = "<group>"; };
 		F514202E2374A0E6006AA7DE /* ErrorCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCodes.swift; sourceTree = "<group>"; };
 		F51AD7F02374AF650070CC25 /* folder-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "folder-icon.png"; sourceTree = "<group>"; };
+		F5C40BD72379E59600F01907 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		F5EB93942374A97F0003D81C /* Folders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folders.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -80,6 +82,7 @@
 			children = (
 				F5EB93942374A97F0003D81C /* Folders.swift */,
 				F514202E2374A0E6006AA7DE /* ErrorCodes.swift */,
+				F5C40BD72379E59600F01907 /* Note.swift */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -169,6 +172,7 @@
 				F514202C2374A023006AA7DE /* CategoryTableViewController.swift in Sources */,
 				F514202F2374A0E6006AA7DE /* ErrorCodes.swift in Sources */,
 				F5EB93952374A97F0003D81C /* Folders.swift in Sources */,
+				F5C40BD82379E59600F01907 /* Note.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

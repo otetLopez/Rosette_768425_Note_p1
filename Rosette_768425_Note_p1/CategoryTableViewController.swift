@@ -44,10 +44,10 @@ class CategoryTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "folder cell", for: indexPath)
         
-    
         cell.textLabel?.text = folderList[indexPath.row].getfname()
         cell.imageView?.image = UIImage(named: "folder-icon")
         
+        //cell.detailTextLabel?.text = ("\(folderList[indexPath.row].getNotesNum())")
         
         
         return cell
@@ -115,10 +115,10 @@ class CategoryTableViewController: UITableViewController {
         folderList.insert(movedObject, at: destinationIndexPath.row)
     }
     
-        override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
             return .none
         }
-        override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
             return false
         }
     
