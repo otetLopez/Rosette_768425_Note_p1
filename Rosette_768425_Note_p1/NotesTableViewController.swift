@@ -176,7 +176,7 @@ class NotesTableViewController: UITableViewController {
                 count += 1
             }
             self.tableView.cellForRow(at: indexPath)?.isEditing = false
-            cancelledAction()
+            //cancelledAction()
         } else {
             self.tableView.cellForRow(at: indexPath)?.isEditing = true
             noteToMoveIdx.append(indexPath.row)
@@ -187,8 +187,6 @@ class NotesTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        print("DEBUG: willDisplay")
-        
         //if indexPath.row == noteToMoveIdx {
             cell.backgroundColor = UIColor.systemGray;
         
@@ -221,7 +219,7 @@ class NotesTableViewController: UITableViewController {
         let alertController = UIAlertController(title: "Delete", message: "Are you sure?", preferredStyle: .alert)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
-            self.cancelledAction()
+            //self.cancelledAction()
         }
         cancelAction.setValue(UIColor.orange, forKey: "titleTextColor")
         
