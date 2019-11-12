@@ -11,19 +11,24 @@ import UIKit
 class NotesTableViewController: UITableViewController {
 
     weak var delegate: CategoryTableViewController?
+    @IBOutlet weak var trashButton: UIBarButtonItem!
+    @IBOutlet weak var moveButton: UIBarButtonItem!
+    
     var currFolder : Folder?
     var fidx : Int = -1
     var notesList = [String]()
     var noteIdx : Int = -1
-
-    
+    var noteIdxPath : IndexPath?
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //RCL: Initialize the current folder we are focusing on
         getFolderData()
+        disableButtons()
         
         print("DEBUG: Entering List for  folder \(self.delegate!.folderList[fidx].getfname()) at \(self.delegate!.folderIdx)")
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -65,10 +70,29 @@ class NotesTableViewController: UITableViewController {
         return cell
     }
     
+    func tableViewRefresh() {
+        getFolderData()
+        tableView.reloadData()
+    }
+    
     func getFolderData() {
         fidx = self.delegate!.folderIdx
         currFolder = self.delegate?.folderList[fidx]
         notesList = (currFolder?.getNoteList())!
+    }
+    
+    func disableButtons() {
+        moveButton.isEnabled = false
+        moveButton.tintColor = UIColor.opaqueSeparator
+        trashButton.isEnabled = false
+        trashButton.tintColor = UIColor.opaqueSeparator
+    }
+    
+    func enableButtons() {
+        moveButton.isEnabled = true
+        moveButton.tintColor = UIColor.white
+        trashButton.isEnabled = true
+        trashButton.tintColor = UIColor.white
     }
 
     func addNote(note : String) {
@@ -80,14 +104,69 @@ class NotesTableViewController: UITableViewController {
         self.delegate?.folderList[fidx].editNote(note: note, index: nidx)
     }
     
+    func deleteNote() {
+        self.delegate?.folderList[fidx].deleteNote(idx: noteIdx)
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         noteIdx = indexPath.row
+        enableButtons()
+        self.tableView.cellForRow(at: indexPath)?.isEditing = true
+        self.tableView.cellForRow(at: indexPath)?.accessoryView?.backgroundColor = UIColor.white
+        self.tableView.cellForRow(at: indexPath)?.isHighlighted = false
         print("You selected Note \(notesList[indexPath.row]) at \(noteIdx)")
     }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        print("DEBUG: willDisplay at \(indexPath.row)")
+        if indexPath.row == noteIdx {
+            cell.backgroundColor = UIColor.systemGray;
+        }
+    }
+    
+
+    
+
+   
     
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         noteIdx = indexPath.row
         print("You selected to edit Note \(notesList[indexPath.row]) at \(noteIdx)")    }
+    
+    @IBAction func addNoteButtonPressed(_ sender: UIBarButtonItem) {
+        noteIdx = -1
+    }
+    @IBAction func trashButtonPressed(_ sender: UIBarButtonItem) {
+        alert()
+    }
+    @IBAction func moveButtonPressed(_ sender: UIBarButtonItem) {
+        
+    }
+    
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none
+    }
+    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    func alert() {
+        let alertController = UIAlertController(title: "Delete", message: "Are you sure?", preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        cancelAction.setValue(UIColor.orange, forKey: "titleTextColor")
+        
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+                self.deleteNote()
+                self.tableViewRefresh()
+        }
+        deleteAction.setValue(UIColor.red, forKey: "titleTextColor")
+
+        alertController.addAction(cancelAction)
+        alertController.addAction(deleteAction)
+            
+        self.present(alertController, animated: true, completion: nil)
+    }
     
     /*
     // Override to support conditional editing of the table view.
