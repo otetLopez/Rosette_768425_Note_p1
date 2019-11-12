@@ -25,7 +25,9 @@ class NotesViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         index = self.delegateNotes!.noteIdx
-        if index > -1 { mod = true }
+        if index > -1 {
+            textViewOutlet.text = self.delegateNotes?.notesList[index]
+            mod = true }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
