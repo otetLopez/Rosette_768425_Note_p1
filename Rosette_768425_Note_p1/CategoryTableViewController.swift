@@ -53,6 +53,23 @@ class CategoryTableViewController: UITableViewController {
         return cell
     }
     
+    func isNameValid(fname: String) -> Bool {
+        for index in folderList {
+            if index.getfname() == fname {
+                alert(msg: "Name Taken")
+                return false
+            }
+        }
+        return true
+    }
+    
+    func alert(msg : String) {
+        let alertController = UIAlertController(title: msg, message: "Please choose a different name", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        okAction.setValue(UIColor.orange, forKey: "titleTextColor")
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
     
     func alert() {
         let alertController = UIAlertController(title: "New Folder", message: "Enter a name for this folder", preferredStyle: .alert)
@@ -63,11 +80,15 @@ class CategoryTableViewController: UITableViewController {
         }
             
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        cancelAction.setValue(UIColor.orange, forKey: "titleTextColor")
+        
         let addItemAction = UIAlertAction(title: "Add Item", style: .default) { (action) in
             let textField = alertController.textFields![0]
             print("DEBUG: Will be adding folder \(textField.text!)")
-            self.addNewFolder(fname: "\(textField.text!)")
-            self.reloadTableView()
+            if(self.isNameValid(fname: "\(textField.text!)")) {
+                self.addNewFolder(fname: "\(textField.text!)")
+                self.reloadTableView()
+            }
         }
         alertController.addAction(cancelAction)
         alertController.addAction(addItemAction)
