@@ -40,6 +40,17 @@ class Folder : CustomStringConvertible {
         notesNum -= 1
     }
     
+    func deleteNote(note : String) {
+        var count : Int = 0
+        for index in notesList {
+            if index == note {
+                notesList.remove(at: count)
+                notesNum -= 1
+            }
+            count += 1
+        }
+    }
+    
     func getfname() -> String {
         return self.fname
     }

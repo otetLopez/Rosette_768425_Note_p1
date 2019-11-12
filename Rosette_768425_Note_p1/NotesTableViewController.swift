@@ -14,12 +14,14 @@ class NotesTableViewController: UITableViewController {
     @IBOutlet weak var trashButton: UIBarButtonItem!
     @IBOutlet weak var moveButton: UIBarButtonItem!
     
+
     var currFolder : Folder?
     var fidx : Int = -1
     var notesList = [String]()
     var noteIdx : Int = -1
-    var noteToMoveIdx : Int = -1
+    var noteToMoveIdx = [Int]()
     var noteIdxPath : IndexPath?
+    var isMovingEnabled : Bool = false
  
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +29,7 @@ class NotesTableViewController: UITableViewController {
         //RCL: Initialize the current folder we are focusing on
         getFolderData()
         disableButtons()
-        noteToMoveIdx = -1
+        noteToMoveIdx.removeAll()
         
         print("DEBUG: Entering List for  folder \(self.delegate!.folderList[fidx].getfname()) at \(self.delegate!.folderIdx)")
         
@@ -35,13 +37,13 @@ class NotesTableViewController: UITableViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        //self.navigationItem.rightBarButtonItem = self.editButtonItem
+        //self.editButtonItem.image = i
     }
 
     // MARK: - Table view data source
 
     override func viewDidAppear(_ animated: Bool) {
-        noteToMoveIdx = -1
         tableViewRefresh()
         
         print("DEBUG viewDidAppear: Tasks are \(notesList.count) with list.count")
@@ -71,6 +73,8 @@ class NotesTableViewController: UITableViewController {
     }
     
     func tableViewRefresh() {
+        isMovingEnabled = false
+        noteToMoveIdx.removeAll()
         notesList.removeAll()
         getFolderData()
         disableButtons()
@@ -97,27 +101,61 @@ class NotesTableViewController: UITableViewController {
         trashButton.tintColor = UIColor.white
     }
 
+    @IBAction func editEnabled(_ sender: UIButton) {
+        print("DEBUG: Ellipses bar button pressed")
+        if isMovingEnabled == true {
+            disableButtons()
+            isMovingEnabled = false
+        } else {
+            enableButtons()
+            isMovingEnabled = true
+        }
+    }
+//    @IBAction func editEnablePressed(_ sender: UIBarButtonItem) {
+//        if isMovingEnabled == true {
+//            disableButtons()
+//            isMovingEnabled = false
+//        } else {
+//            enableButtons()
+//            isMovingEnabled = true
+//        }
+//    }
     func addNote(note : String) {
         print("DEBUG: Adding note \(note) to \(self.delegate?.folderList[fidx].getfname() ?? "no name")")
         self.delegate?.folderList[fidx].addNote(newNote: note)
     }
     
     func addNote(folderIndex : Int) {
-        print("DEBUG: Adding note \(notesList[noteToMoveIdx]) to \(self.delegate?.folderList[folderIndex].getfname() ?? "no name")")
-        self.delegate?.folderList[folderIndex].addNote(newNote: notesList[noteToMoveIdx])
+        print("DEBUG: About to add \(noteToMoveIdx.count)")
+        var index : Int = 0
+        for _ in noteToMoveIdx {
+            print("DEBUG: Adding note \(notesList[noteToMoveIdx[index]]) to \(self.delegate?.folderList[folderIndex].getfname() ?? "no name")")
+            self.delegate?.folderList[folderIndex].addNote(newNote: notesList[noteToMoveIdx[index]])
+            index += 1
+        }
     }
-
     
     func editNote(note : String, nidx : Int) {
         self.delegate?.folderList[fidx].editNote(note: note, index: nidx)
     }
     
     func deleteNote() {
-        self.delegate?.folderList[fidx].deleteNote(idx: noteToMoveIdx)
+        print("DEBUG: About to delete \(noteToMoveIdx.count)")
+        var index : Int = 0
+        for _ in noteToMoveIdx {
+            print("DEBUG: Deleting \(notesList[noteToMoveIdx[index]]) from \(self.delegate?.folderList[fidx].getfname())")
+            if noteToMoveIdx.count > 1 {
+                self.delegate?.folderList[fidx].deleteNote(note: "\(notesList[noteToMoveIdx[index]])" )
+            } else {
+                self.delegate?.folderList[fidx].deleteNote(idx: noteToMoveIdx[index])
+            }
+            index += 1
+        }
+        tableViewRefresh()
     }
     
     func cancelledAction() {
-        self.tableView.cellForRow(at: noteIdxPath!)?.isEditing = false
+        //self.tableView.cellForRow(at: noteIdxPath!)?.isEditing = false
         disableButtons()
     }
     
@@ -126,25 +164,35 @@ class NotesTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        noteToMoveIdx = indexPath.row
+        print("You selected Note \(notesList[indexPath.row]) at \(indexPath.row)")
         noteIdxPath = indexPath
-        enableButtons()
+
         if self.tableView.cellForRow(at: indexPath)?.isEditing == true {
+            var count : Int = 0
+            for index in noteToMoveIdx {
+                if index == indexPath.row {
+                    noteToMoveIdx.remove(at: count)
+                }
+                count += 1
+            }
+            self.tableView.cellForRow(at: indexPath)?.isEditing = false
             cancelledAction()
         } else {
             self.tableView.cellForRow(at: indexPath)?.isEditing = true
+            noteToMoveIdx.append(indexPath.row)
         }
         self.tableView.cellForRow(at: indexPath)?.accessoryView?.backgroundColor = UIColor.systemGray
         self.tableView.cellForRow(at: indexPath)?.isHighlighted = false
         self.tableView.cellForRow(at: indexPath)?.selectionStyle = .none
-        print("You selected Note \(notesList[indexPath.row]) at \(noteToMoveIdx)")
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        print("DEBUG: willDisplay at \(indexPath.row)")
-        if indexPath.row == noteToMoveIdx {
+        print("DEBUG: willDisplay")
+        
+        //if indexPath.row == noteToMoveIdx {
             cell.backgroundColor = UIColor.systemGray;
-        }
+        
+        //}
     }
     
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
