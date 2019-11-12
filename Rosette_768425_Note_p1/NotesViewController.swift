@@ -12,7 +12,6 @@ class NotesViewController: UIViewController {
 
     @IBOutlet weak var textViewOutlet: UITextView!
     weak var delegateNotes: NotesTableViewController?
-    weak var delegateFolders: CategoryTableViewController?
     
     //RCL: This will indicate if we are adding a new note or modifying an existing one
     var mod : Bool = false
@@ -23,20 +22,20 @@ class NotesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        index = self.delegateNotes!.noteIdx
-        fdx = 0//self.delegateFolders!.folderIdx 
+        
         // Do any additional setup after loading the view.
+        index = self.delegateNotes!.noteIdx
+        if index > -1 { mod = true }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         if !(textViewOutlet.text!.isEmpty) {
             if mod == true {
-                self.delegateFolders?.folderList[fdx].updNote(note: textViewOutlet.text!, index: index)
+                self.delegateNotes?.editNote(note: self.textViewOutlet.text!, nidx: self.index)
                 self.delegateNotes?.noteIdx = -1
                 mod = false
             } else {
-                print("DEBUG adding note \(textViewOutlet.text!) to \(self.delegateFolders?.folderList[fdx].getfname())")
-                self.delegateFolders?.folderList[fdx].addNote(newNote: textViewOutlet.text!)
+                self.delegateNotes?.addNote(note: textViewOutlet.text!)
             }
         }
     }

@@ -30,7 +30,7 @@ class Folder : CustomStringConvertible {
         notesNum += 1
     }
     
-    func updNote(note: String, index: Int) {
+    func editNote(note: String, index: Int) {
         notesList.remove(at: index)
         notesList.insert(note, at: index)
     }

@@ -99,7 +99,7 @@ class CategoryTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         folderIdx = indexPath.row
-        print("You selected \(folderList[indexPath.row]) at \(indexPath.row)")
+        print("You selected Folder \(folderList[indexPath.row].getfname()) at \(folderIdx)")
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -174,10 +174,6 @@ class CategoryTableViewController: UITableViewController {
         
         if let notes = segue.destination as? NotesTableViewController {
             notes.delegate = self
-        }
-        
-        if let note = segue.destination as? NotesViewController {
-            note.delegateFolders = self
         }
     }
     

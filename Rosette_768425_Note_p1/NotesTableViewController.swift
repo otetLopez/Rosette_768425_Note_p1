@@ -11,14 +11,19 @@ import UIKit
 class NotesTableViewController: UITableViewController {
 
     weak var delegate: CategoryTableViewController?
+    var currFolder : Folder?
+    var fidx : Int = -1
     var notesList = [String]()
     var noteIdx : Int = -1
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        noteIdx = self.delegate!.folderIdx
-        notesList = (self.delegate?.folderList[noteIdx].getNoteList())!
+        //RCL: Initialize the current folder we are focusing on
+        getFolderData()
+        
+        print("DEBUG: Entering List for  folder \(self.delegate!.folderList[fidx].getfname()) at \(self.delegate!.folderIdx)")
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -31,7 +36,8 @@ class NotesTableViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
     //        guard list != nil else { return }
         notesList.removeAll()
-        notesList = (self.delegate?.folderList[noteIdx].getNoteList())!
+        getFolderData()
+        
         print("DEBUG viewDidAppear: Tasks are \(notesList.count) with list.count")
         print(notesList)
         tableView.reloadData()
@@ -59,7 +65,26 @@ class NotesTableViewController: UITableViewController {
         return cell
     }
     
+    func getFolderData() {
+        fidx = self.delegate!.folderIdx
+        currFolder = self.delegate?.folderList[fidx]
+        notesList = (currFolder?.getNoteList())!
+    }
 
+    func addNote(note : String) {
+        print("DEBUG: Adding note \(note) to \(self.delegate?.folderList[fidx].getfname() ?? "no name")")
+        self.delegate?.folderList[fidx].addNote(newNote: note)
+    }
+    
+    func editNote(note : String, nidx : Int) {
+        self.delegate?.folderList[fidx].editNote(note: note, index: nidx)
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        noteIdx = indexPath.row
+        print("You selected Note \(notesList[indexPath.row]) at \(noteIdx)")
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
