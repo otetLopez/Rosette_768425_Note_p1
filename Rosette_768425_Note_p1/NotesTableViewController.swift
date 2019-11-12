@@ -115,6 +115,10 @@ class NotesTableViewController: UITableViewController {
         disableButtons()
     }
     
+    func getFolderList() -> [Folder] {
+        return self.delegate!.folderList
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         noteToMoveIdx = indexPath.row
         noteIdxPath = indexPath
@@ -223,6 +227,9 @@ class NotesTableViewController: UITableViewController {
         
         if let note = segue.destination as? NotesViewController {
             note.delegateNotes = self
+        }
+        if let move = segue.destination as? MoveToFolderTableViewController {
+            move.delegateMoveNote = self
         }
     }
     
