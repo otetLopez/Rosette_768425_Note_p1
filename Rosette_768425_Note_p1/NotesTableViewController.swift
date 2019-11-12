@@ -102,6 +102,12 @@ class NotesTableViewController: UITableViewController {
         self.delegate?.folderList[fidx].addNote(newNote: note)
     }
     
+    func addNote(folderIndex : Int) {
+        print("DEBUG: Adding note \(notesList[noteToMoveIdx]) to \(self.delegate?.folderList[folderIndex].getfname() ?? "no name")")
+        self.delegate?.folderList[folderIndex].addNote(newNote: notesList[noteToMoveIdx])
+    }
+
+    
     func editNote(note : String, nidx : Int) {
         self.delegate?.folderList[fidx].editNote(note: note, index: nidx)
     }

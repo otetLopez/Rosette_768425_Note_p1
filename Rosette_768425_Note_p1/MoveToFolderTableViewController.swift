@@ -12,6 +12,7 @@ class MoveToFolderTableViewController: UITableViewController {
 
     weak var delegateMoveNote: NotesTableViewController?
     var folderList = [Folder]()
+    var folderIdx : Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +57,37 @@ class MoveToFolderTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        folderIdx = indexPath.row
+        print("You selected destination \(folderList[indexPath.row]) at \(folderIdx)")
+        alert()
+    }
+    
+    func moveNote() {
+        self.delegateMoveNote?.addNote(folderIndex: folderIdx)
+        self.delegateMoveNote?.deleteNote()
+        self.delegateMoveNote?.tableViewRefresh()
+    }
+    
+    func alert() {
+        let alertController = UIAlertController(title: "Move to \(folderList[folderIdx].getfname())", message: "Are you sure?", preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "No", style: .cancel) { (action) in
+            //Dismiss alert
+        }
+        cancelAction.setValue(UIColor.orange, forKey: "titleTextColor")
+        
+        let deleteAction = UIAlertAction(title: "Move", style: .destructive) { (action) in
+                self.moveNote()
+                self.dismiss(animated: true, completion: nil)
+        }
+        deleteAction.setValue(UIColor.red, forKey: "titleTextColor")
+
+        alertController.addAction(cancelAction)
+        alertController.addAction(deleteAction)
+            
+        self.present(alertController, animated: true, completion: nil)
+    }
 
     /*
     // Override to support conditional editing of the table view.
