@@ -130,6 +130,7 @@ class NotesTableViewController: UITableViewController {
         }
         self.tableView.cellForRow(at: indexPath)?.accessoryView?.backgroundColor = UIColor.systemGray
         self.tableView.cellForRow(at: indexPath)?.isHighlighted = false
+        self.tableView.cellForRow(at: indexPath)?.selectionStyle = .none
         print("You selected Note \(notesList[indexPath.row]) at \(noteToMoveIdx)")
     }
     
