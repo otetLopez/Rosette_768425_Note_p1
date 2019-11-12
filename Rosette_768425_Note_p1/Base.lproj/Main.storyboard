@@ -126,7 +126,6 @@
                         <barButtonItem image="pencil.and.ellipsis.rectangle" catalog="system" id="Fiq-aH-RuS">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <action selector="addNoteButtonPressed:" destination="ORS-Iu-be5" id="WtG-n7-WXV"/>
                                 <segue destination="QAj-3x-0IV" kind="show" id="4Fs-Ka-U7N"/>
                             </connections>
                         </barButtonItem>

@@ -18,6 +18,7 @@ class NotesTableViewController: UITableViewController {
     var fidx : Int = -1
     var notesList = [String]()
     var noteIdx : Int = -1
+    var noteToMoveIdx : Int = -1
     var noteIdxPath : IndexPath?
  
     override func viewDidLoad() {
@@ -26,6 +27,7 @@ class NotesTableViewController: UITableViewController {
         //RCL: Initialize the current folder we are focusing on
         getFolderData()
         disableButtons()
+        noteToMoveIdx = -1
         
         print("DEBUG: Entering List for  folder \(self.delegate!.folderList[fidx].getfname()) at \(self.delegate!.folderIdx)")
         
@@ -39,13 +41,11 @@ class NotesTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func viewDidAppear(_ animated: Bool) {
-    //        guard list != nil else { return }
-        notesList.removeAll()
-        getFolderData()
+        noteToMoveIdx = -1
+        tableViewRefresh()
         
         print("DEBUG viewDidAppear: Tasks are \(notesList.count) with list.count")
         print(notesList)
-        tableView.reloadData()
     }
     
     
@@ -71,7 +71,9 @@ class NotesTableViewController: UITableViewController {
     }
     
     func tableViewRefresh() {
+        notesList.removeAll()
         getFolderData()
+        disableButtons()
         tableView.reloadData()
     }
     
@@ -105,35 +107,41 @@ class NotesTableViewController: UITableViewController {
     }
     
     func deleteNote() {
-        self.delegate?.folderList[fidx].deleteNote(idx: noteIdx)
+        self.delegate?.folderList[fidx].deleteNote(idx: noteToMoveIdx)
+    }
+    
+    func cancelledAction() {
+        self.tableView.cellForRow(at: noteIdxPath!)?.isEditing = false
+        disableButtons()
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        noteIdx = indexPath.row
+        noteToMoveIdx = indexPath.row
+        noteIdxPath = indexPath
         enableButtons()
-        self.tableView.cellForRow(at: indexPath)?.isEditing = true
-        self.tableView.cellForRow(at: indexPath)?.accessoryView?.backgroundColor = UIColor.white
+        if self.tableView.cellForRow(at: indexPath)?.isEditing == true {
+            cancelledAction()
+        } else {
+            self.tableView.cellForRow(at: indexPath)?.isEditing = true
+        }
+        self.tableView.cellForRow(at: indexPath)?.accessoryView?.backgroundColor = UIColor.systemGray
         self.tableView.cellForRow(at: indexPath)?.isHighlighted = false
-        print("You selected Note \(notesList[indexPath.row]) at \(noteIdx)")
+        print("You selected Note \(notesList[indexPath.row]) at \(noteToMoveIdx)")
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         print("DEBUG: willDisplay at \(indexPath.row)")
-        if indexPath.row == noteIdx {
+        if indexPath.row == noteToMoveIdx {
             cell.backgroundColor = UIColor.systemGray;
         }
     }
-    
-
-    
-
-   
     
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         noteIdx = indexPath.row
         print("You selected to edit Note \(notesList[indexPath.row]) at \(noteIdx)")    }
     
     @IBAction func addNoteButtonPressed(_ sender: UIBarButtonItem) {
+        print("DEBUG: Add New Note Button Pressed")
         noteIdx = -1
     }
     @IBAction func trashButtonPressed(_ sender: UIBarButtonItem) {
@@ -153,7 +161,9 @@ class NotesTableViewController: UITableViewController {
     func alert() {
         let alertController = UIAlertController(title: "Delete", message: "Are you sure?", preferredStyle: .alert)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            self.cancelledAction()
+        }
         cancelAction.setValue(UIColor.orange, forKey: "titleTextColor")
         
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
