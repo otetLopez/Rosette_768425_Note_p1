@@ -103,6 +103,9 @@ class CategoryTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         folderIdx = indexPath.row
+        self.tableView.cellForRow(at: indexPath)?.accessoryView?.backgroundColor = UIColor.systemGray
+        self.tableView.cellForRow(at: indexPath)?.isHighlighted = false
+        self.tableView.cellForRow(at: indexPath)?.selectionStyle = .none
         print("You selected Folder \(folderList[indexPath.row].getfname()) at \(folderIdx)")
     }
     
