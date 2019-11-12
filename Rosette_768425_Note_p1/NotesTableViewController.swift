@@ -85,6 +85,10 @@ class NotesTableViewController: UITableViewController {
         print("You selected Note \(notesList[indexPath.row]) at \(noteIdx)")
     }
     
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        noteIdx = indexPath.row
+        print("You selected to edit Note \(notesList[indexPath.row]) at \(noteIdx)")    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

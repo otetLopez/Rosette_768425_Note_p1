@@ -97,6 +97,10 @@ class CategoryTableViewController: UITableViewController {
         }
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+           tableView.reloadData()
+       }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         folderIdx = indexPath.row
         print("You selected Folder \(folderList[indexPath.row].getfname()) at \(folderIdx)")
