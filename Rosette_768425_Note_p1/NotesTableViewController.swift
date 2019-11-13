@@ -45,6 +45,7 @@ class NotesTableViewController: UITableViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         tableViewRefresh()
+        disableButtons()
         
         print("DEBUG viewDidAppear: Tasks are \(notesList.count) with list.count")
         print(notesList)
@@ -77,7 +78,6 @@ class NotesTableViewController: UITableViewController {
         noteToMoveIdx.removeAll()
         notesList.removeAll()
         getFolderData()
-        disableButtons()
         tableView.reloadData()
     }
     
@@ -111,15 +111,6 @@ class NotesTableViewController: UITableViewController {
             isMovingEnabled = true
         }
     }
-//    @IBAction func editEnablePressed(_ sender: UIBarButtonItem) {
-//        if isMovingEnabled == true {
-//            disableButtons()
-//            isMovingEnabled = false
-//        } else {
-//            enableButtons()
-//            isMovingEnabled = true
-//        }
-//    }
     func addNote(note : String) {
         print("DEBUG: Adding note \(note) to \(self.delegate?.folderList[fidx].getfname() ?? "no name")")
         self.delegate?.folderList[fidx].addNote(newNote: note)
@@ -155,7 +146,6 @@ class NotesTableViewController: UITableViewController {
     }
     
     func cancelledAction() {
-        //self.tableView.cellForRow(at: noteIdxPath!)?.isEditing = false
         disableButtons()
     }
     
@@ -187,10 +177,7 @@ class NotesTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        //if indexPath.row == noteToMoveIdx {
-            cell.backgroundColor = UIColor.systemGray;
-        
-        //}
+        cell.backgroundColor = UIColor.systemGray;
     }
     
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
